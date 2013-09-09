@@ -12,10 +12,12 @@ import Vragenbak(createDefaultVragenbak, Question (..), Answer (..), getRandomQu
 main :: IO ()
 main =
   let vraagbaak = createDefaultVragenbak in
-  let examen = take 20 $ repeat $ getAndRemoveQuestion 1 in
   do
-      --(question, nieuweVraagbaak) <- runStateT vraagbaak askStateQuestion
-      putStrLn "koekoek"
+      b <- execStateT (return vraagbaak) $ exerciseState
+                                                 
+      return ()
+      --if b then putStrLn "Goe" else putStrLn "nie goe"
+
  -- do
      
   --    askQuestion question
@@ -27,6 +29,17 @@ main =
      -- print (foldr (\ b i -> if b then i+1 else i) 0 exam) 
      -- print "out of "
      -- print $ length exam
+    
+    
+exerciseState::StateT Vraagbaak IO ()
+exerciseState = do 
+                   q <- askStateQuestion
+                   a <- readStateQuestion
+                   s <- get
+                   juist <- liftIO $  correctionGuard $ verifyQuestion q a s 
+                   liftIO $ if juist then putStrLn "juist" else putStrLn "fout"
+                   
+                   
      
 askStateQuestion::StateT Vraagbaak IO Question
 askStateQuestion  = do
@@ -56,7 +69,7 @@ correctionGuard (False,Answer s) = do
 
 askQuestion::Question -> IO Question
 askQuestion (Question s) = do
-                            print s
+                            print $  "De vraag is : "++s
                             return (Question s)
 
 readAnswer::IO Answer

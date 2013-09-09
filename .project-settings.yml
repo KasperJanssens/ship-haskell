@@ -1,7 +1,14 @@
-extensions: {}
+extensions:
+  TemplateHaskell: true
+  TypeFamilies: true
+  QuasiQuotes: true
+  GADTs: true
+  FlexibleContexts: true
+  OverloadedStrings: true
 cabal-file: project.cabal
+extra-packages: ''
 version: 1
-environment: ghc-7.4.2-stable-13.06
+environment: ghc-7.4.2-stable-13.09
 module-template: ! 'module MODULE_NAME where
 
 '
@@ -9,3 +16,7 @@ ghc-args: []
 modules:
   Main(src/Main.hs):
     filename: src/Main.hs
+  Vragenbak:
+    filename: src/Vragenbak.hs
+  DatabaseStuff:
+    filename: src/DatabaseStuff.hs

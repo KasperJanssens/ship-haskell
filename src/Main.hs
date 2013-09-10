@@ -14,12 +14,11 @@ main :: IO ()
 main =
   let vraagbaak = createDefaultVragenbak in
   do
-      a <- evalStateT  (do 
-                          exerciseState
-                          exerciseState
-                          exerciseState
-                          exerciseState
-                          exerciseState)  vraagbaak
+      result <- evalStateT  (sequence $ take 5 $ repeat exerciseState) vraagbaak
+      putStr "Score is "
+      putStr $ fromString $ show $ foldr (\b r -> if b then r+1 else r) 0 result
+      putStr " op "
+      putStrLn $ fromString $ show $ length result
       return ()
      
     

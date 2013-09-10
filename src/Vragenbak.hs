@@ -30,8 +30,8 @@ addQuestion::Question-> Answer -> State Vraagbaak ()
 addQuestion question answer = state $ \vraagbaak -> ((), addVraag question answer vraagbaak)
 
 getAndRemoveQuestion::Int ->  StateT Vraagbaak IO Question
-getAndRemoveQuestion index = state $ \vraagbaak -> let question = questions vraagbaak !! index
-                                       in  (question, deleteVraag question vraagbaak)
+getAndRemoveQuestion index = state $ \vraagbaak -> let question = questions vraagbaak !! index 
+                                                   in  (question, deleteVraag question vraagbaak)
 
 getRandomQuestion::Vraagbaak -> IO Question
 getRandomQuestion vraagbaak = let numberOfQuestions = length $ questions vraagbaak in
@@ -45,6 +45,9 @@ verifyQuestion question answerFromUser vraagbaak = let possibleAnswer = (Data.Ha
                                            case possibleAnswer of
                                                Nothing -> (False, Answer $ fromString "impossible situation found I guess")
                                                Just  answerFromDelphi -> (answerFromDelphi == answerFromUser, answerFromDelphi)
+                                               
+getSize::StateT Vraagbaak IO Int
+getSize = state $ \vraagbaak -> (length $ questions vraagbaak, vraagbaak)
 
 
 data Vraagbaak = Vraagbaak{

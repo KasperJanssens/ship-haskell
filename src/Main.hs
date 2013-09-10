@@ -5,7 +5,8 @@ import Data.ByteString.Char8 (putStr, putStrLn)
 import Data.ByteString.UTF8 (fromString)
 import DatabaseStuff (setupDatabase)
 import Control.Monad.State
-import Vragenbak(createDefaultVragenbak, Question (..), Answer (..), getRandomQuestion, verifyQuestion, Vraagbaak,createLegenBak,getAndRemoveQuestion, addVraag)
+import System.Random(getStdGen, next, randomRIO)
+import Vragenbak(createDefaultVragenbak, Question (..), Answer (..), getRandomQuestion, verifyQuestion, Vraagbaak,createLegenBak,getAndRemoveQuestion, addVraag, getSize)
 
 
 
@@ -13,23 +14,29 @@ main :: IO ()
 main =
   let vraagbaak = createDefaultVragenbak in
   do
-      (a,s) <- runStateT exerciseState  vraagbaak
+      a <- evalStateT  (do 
+                          exerciseState
+                          exerciseState
+                          exerciseState
+                          exerciseState
+                          exerciseState)  vraagbaak
       return ()
      
     
-exerciseState::StateT Vraagbaak IO ()
+exerciseState::StateT Vraagbaak IO Bool
 exerciseState = do 
                    q <- askStateQuestion
                    a <- readStateQuestion
                    s <- get
                    juist <- liftIO $  correctionGuard $ verifyQuestion q a s 
-                   liftIO $ if juist then putStrLn "juist" else putStrLn "fout"
-                   
+                   return juist                   
                    
      
 askStateQuestion::StateT Vraagbaak IO Question
 askStateQuestion  = do
-                        question <- getAndRemoveQuestion 0
+                        vraagbaakSize <- getSize
+                        index <- liftIO $ randomRIO (0,vraagbaakSize -1) 
+                        question <- getAndRemoveQuestion index
                         liftIO $ askQuestion question
                         return question
 
@@ -48,7 +55,7 @@ correctionGuard (False,Answer s) = do
 
 askQuestion::Question -> IO Question
 askQuestion (Question s) = do
-                            print $  "De vraag is : "++s
+                            print s
                             return (Question s)
 
 readAnswer::IO Answer

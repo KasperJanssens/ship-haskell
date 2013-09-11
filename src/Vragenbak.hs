@@ -10,9 +10,6 @@ import Data.List(delete)
 import Control.Monad.State
 
 
-rollDice :: IO Int
-rollDice = getStdRandom (randomR (1,6))
-
 newtype Question = Question String deriving (Ord, Eq)
 
 instance Hashable Question where
@@ -33,11 +30,7 @@ getAndRemoveQuestion::Int ->  StateT Vraagbaak IO Question
 getAndRemoveQuestion index = state $ \vraagbaak -> let question = questions vraagbaak !! index 
                                                    in  (question, deleteVraag question vraagbaak)
 
-getRandomQuestion::Vraagbaak -> IO Question
-getRandomQuestion vraagbaak = let numberOfQuestions = length $ questions vraagbaak in
-                              (\index -> questions vraagbaak !! index) <$> getStdRandom (randomR (0, numberOfQuestions-1))
-                              
-                              
+          
 
 
 verifyQuestion::Question -> Answer  -> Vraagbaak -> (Bool, Answer)

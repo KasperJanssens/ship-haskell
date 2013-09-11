@@ -6,7 +6,7 @@ import Data.ByteString.UTF8 (fromString)
 import DatabaseStuff (setupDatabase)
 import Control.Monad.State
 import System.Random(getStdGen, next, randomRIO)
-import Vragenbak(createDefaultVragenbak, Question (..), Answer (..), getRandomQuestion, verifyQuestion, Vraagbaak,createLegenBak,getAndRemoveQuestion, addVraag, getSize)
+import Vragenbak(createDefaultVragenbak, Question (..), Answer (..), verifyQuestion, Vraagbaak,createLegenBak,getAndRemoveQuestion,  getSize)
 
 
 

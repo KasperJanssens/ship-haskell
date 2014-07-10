@@ -14,7 +14,7 @@ main :: IO ()
 main =
   let vraagbaak = createDefaultVragenbak in
   do
-      result <- evalStateT  (sequence $ take 5 $ repeat exerciseState) vraagbaak
+      result <- evalStateT  (sequence $ take 20 $ repeat exerciseState) vraagbaak
       putStr "Score is "
       putStr $ fromString $ show $ foldr (\b r -> if b then r+1 else r) 0 result
       putStr " op "

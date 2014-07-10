@@ -108,7 +108,7 @@ createDefaultVragenbak =    addVraag (Question "goeienavond") (Answer $ fromStri
                             addVraag (Question "Tot ziens") (Answer $ fromString "dovidenia")     $
                             addVraag (Question "Goedenacht") (Answer $ fromString "dobrú noc") $
                             addVraag (Question "wit") (Answer $ fromString "biela")$
-                            addVraag (Question "geel") (Answer $ fromString "žitá") $
+                            addVraag (Question "geel") (Answer $ fromString "žltá") $
                             addVraag (Question "rood") (Answer $ fromString "červená") $
                             addVraag (Question "roos") (Answer $ fromString "ružová") $
                             addVraag (Question "blauw") (Answer $ fromString "modrá")  $   
@@ -126,7 +126,17 @@ createDefaultVragenbak =    addVraag (Question "goeienavond") (Answer $ fromStri
                             addVraag (Question "zaterdag") (Answer $ fromString "sobota") $
                             addVraag (Question "zondag") (Answer $ fromString "nedeľa")     $
                             addVraag (Question "links") (Answer $ fromString "doľava") $
-                            addVraag (Question "rechts") (Answer $ fromString "doprava")     $
+                            addVraag (Question "rechts") (Answer $ fromString "doprava") $
+                            addVraag (Question "bord") (Answer $ fromString "tanier") $
+                            addVraag (Question "soepbord") (Answer $ fromString "hlboký tanier") $
+                            addVraag (Question "dessertbord") (Answer $ fromString "tanierik") $
+                            addVraag (Question "lepel") (Answer $ fromString "lyžica") $
+                            addVraag (Question "koffielepel") (Answer $ fromString "lyžička") $
+                            addVraag (Question "vork") (Answer $ fromString "vidlička") $
+                            addVraag (Question "mes") (Answer $ fromString "nôž") $
+                            addVraag (Question "glas") (Answer $ fromString "pohár") $
+                            addVraag (Question "tas") (Answer $ fromString "šálka") $
+                            addVraag (Question "mok") (Answer $ fromString "hrnček") $
                             addVraag  (Question "goedemorgen") (Answer $ fromString "dobré ráno") $ Vraagbaak { questions = [], delphi = empty}
 
 

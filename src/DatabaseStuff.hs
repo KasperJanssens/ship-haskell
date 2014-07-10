@@ -2,11 +2,12 @@ module DatabaseStuff where
 
 import Data.Text (Text)
 import Vragenbak(Question, Answer)
-import Database.Persist
-import Database.Persist.Sql(insert)
+import Database.Persist 
+import Database.Persist.Sql(insert, rawQuery, Migration,SqlBackend)
 import Database.Persist.Sqlite (runSqlite, runMigrationSilent)
 import Database.Persist.TH (mkPersist, mkMigrate, persistLowerCase,
        share, sqlSettings)
+import Control.Monad.IO.Class (liftIO)
 
 share [mkPersist sqlSettings, mkMigrate "migrateTables"] [persistLowerCase|
 ExamQuestion
@@ -14,6 +15,11 @@ ExamQuestion
    answer      Text
    deriving Show
 |]
+
+--getExamQuestions:: Migration [PersistValue] ()
+--getExamQuestions =  rawQuery "select * from ExamQuestion" []
+                    
+                    
 
 setupDatabase:: IO ()
 setupDatabase = runSqlite ":memory:" $ do 
@@ -93,5 +99,12 @@ setupDatabase = runSqlite ":memory:" $ do
                                             insert $ ExamQuestion "links" "doľava"
                                             insert $ ExamQuestion "rechts" "doprava"
                                             insert $ ExamQuestion "goedemorgen" "dobré ráno"
+                                            basic <- selectList [ExamQuestionQuestion ==. "goedemorgen"] []
+                                            liftIO $ print basic
                                             return ()
+                                            
+getExamQuestions::IO [Entity (ExamQuestionGeneric SqlBackend) ]
+getExamQuestions = runSqlite ":memory:" $ do 
+                                            selectList [ExamQuestionQuestion ==. "goedemorgen"] []
+  
                                             
